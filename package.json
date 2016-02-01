@@ -1,0 +1,44 @@
+{
+  "name": "ng2_play",
+  "version": "1.0.0",
+  "description": "- Blog @ http://www.towfeek.se/2015/07/angularjs-2-overview/\r - Screencast @ https://youtu.be/rd3cLh_wn04",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajtowf/ng2_play.git"
+  },
+  "author": "Ajden Towfeek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ajtowf/ng2_play/issues"
+  },
+  "homepage": "https://github.com/ajtowf/ng2_play#readme",
+  "devDependencies": {
+    "browser-sync": "^2.9.3",
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-tslint": "^3.2.0",
+    "gulp-typescript": "^2.10.0",
+    "path": "^0.12.7",
+    "run-sequence": "^1.1.5",
+    "superstatic": "^1.2.3"
+  },
+  "dependencies": {
+    "angular2": "2.0.0-beta.0",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.3",
+    "express": "^4.13.4",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.0",
+    "systemjs": "0.19.6",
+    "zone.js": "0.5.10"
+  }
+}
