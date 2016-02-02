@@ -1,4 +1,4 @@
-import express = require('express');
+/*import express = require('express');
 import path = require('path');
 var port: number = process.env.PORT || 3000;
 var app = express();
@@ -17,26 +17,26 @@ var server = app.listen(port, function() {
     var port = server.address().port;
     console.log('This express app is listening on port:' + port);
 });
+*/
 
 
+'use strict';
 
-// 'use strict';
+var express = require('express');
+var http = require('http');
+var path = require('path');
+var app = express();
+var server = http.createServer(app);
 
-// var express = require('express');
-// var http = require('http');
-// var path = require('path');
-// var app = express();
-// var server = http.createServer(app);
+app.get('/', function(req, res) {
 
-// app.get('/', function(req, res) {
+	res.sendfile(path.resolve(__dirname, '../client/index.html'));
 
-// 	res.sendfile(path.resolve(__dirname, '../client/index.html'));
+});
 
-// });
+app.use(express.static('built/client'));
 
-// app.use(express.static('built/client'));
-
-// server.listen(3000, 'localhost');
-// server.on('listening', function() {
-// 	console.log('Express server started on port %s at %s', server.address().port, server.address().address);
-// });
+server.listen(3100, 'localhost');
+server.on('listening', function() {
+	console.log('Express server started on port %s at %s', server.address().port, server.address().address);
+});

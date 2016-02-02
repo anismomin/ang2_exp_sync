@@ -1,6 +1,7 @@
 module.exports = function() {
 	var config = {
-		src: './src/',
+		dev: './src/',
+		
 		clientConf: './src/client/tsconfig.json',
 		client: './src/client/',
 		clientTs: './src/client/**/**/*.ts',
@@ -14,14 +15,14 @@ module.exports = function() {
 		devServerTs: './src/server/**/*.ts',
 
 		built : './built/',
-		builtLibs: './built/libs/',
+		builtLibs: './built/client/libs/',
 		builtClient: './built/client/',
 		images: './built/assets/images/',
 		scss: './built/assets/css/',		
 
 		builtServer: './built/server/',
 
-		indexPage: 'src/index.html'
+		indexPage: 'src/client/index.html'
 		
 
 	};

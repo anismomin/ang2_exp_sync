@@ -22,6 +22,9 @@ var imagemin = require('gulp-imagemin');
 var sass        = require('gulp-sass');
 
 
+gulp.task('clean_build', function(){
+    return del(config.built)
+});
 
 
 
@@ -30,7 +33,7 @@ gulp.task('cleanServer', function(){
     return del(config.builtServer)
 });
 
-gulp.task('build_server', ['cleanServer'], function () {
+gulp.task('build_server', function () {
     var tsProject = tsc.createProject(config.serverConf);    
     var tsResult = gulp.src(config.devServerTs)
         .pipe(sourcemaps.init())
@@ -45,7 +48,7 @@ gulp.task('build_server', ['cleanServer'], function () {
 // connected to browser-sync after restarting nodemon
 var BROWSER_SYNC_RELOAD_DELAY = 500;
 
-gulp.task('nodemon', ['build_server'], function (cb) {
+gulp.task('nodemon', ['cleanServer', 'build_server'], function (cb) {
   var called = false;
   return nodemon({
 
@@ -70,12 +73,11 @@ gulp.task('nodemon', ['build_server'], function (cb) {
     });
 });
 
-
-gulp.watch(config.devServerTs, ['nodemon', browserSync.reload]);
-
 gulp.task('bs_reload', function () {
-  browserSync.reload();
+    browserSync.reload();
 });
+
+gulp.watch(config.devServerTs, ['nodemon', 'bs_reload']);
 
 
 // CLIENT
@@ -90,25 +92,27 @@ gulp.task('ts_lint', function() {
 /*
   jsNPMDependencies, sometimes order matters here! so becareful!
 */
-// var jsNPMDependencies = [
-//     'angular2/bundles/angular2-polyfills.js',
-//     'systemjs/dist/system.src.js',
-//     'rxjs/bundles/Rx.js',
-//     'angular2/bundles/angular2.dev.js',
-//     'angular2/bundles/router.dev.js'
-// ] 
+var jsNPMDependencies = [
+    'es6-shim/es6-shim.min.js',
+    'angular2/bundles/angular2-polyfills.js',
+    'systemjs/dist/system.src.js',
+    'rxjs/bundles/Rx.js',
+    'angular2/bundles/angular2.dev.js',
+    'angular2/bundles/router.dev.js',
+    'angular2/bundles/http.dev.js'
+] 
 
 gulp.task('build_index', function(){
     
-    // var mappedPaths = jsNPMDependencies.map(file => {return path.resolve('node_modules', file)});
+    var mappedPaths = jsNPMDependencies.map(file => {return path.resolve('node_modules', file)});
     
-    // var copyJsNPMDependencies = gulp.src(mappedPaths, {base:'node_modules'})
-    //     .pipe(gulp.dest(config.builtLibs));
+    var copyJsNPMDependencies = gulp.src(mappedPaths, {base:'node_modules'})
+        .pipe(gulp.dest(config.builtLibs));
      
-    // var copyIndex = gulp.src(config.indexPage)
-    //     .pipe(gulp.dest(config.builtClient));
+    var copyIndex = gulp.src(config.indexPage)
+        .pipe(gulp.dest(config.builtClient));
 
-    // return [copyJsNPMDependencies, copyIndex];
+    return [copyJsNPMDependencies, copyIndex];
 
 });
 
@@ -152,35 +156,18 @@ gulp.task('build_img', function () {
 });
 
 
-gulp.task('serve', ['nodemon', 'ts_lint', 'compile_ts'], function() {
+gulp.task('serve', ['nodemon', 'ts_lint', 'build_index', 'compile_ts'], function() {
     	
     gulp.watch([config.clientTs], ['ts_lint', 'compile_ts']);
 	
-    // browserSync({
-    //     port: 4000,
-    //     files: ['index.html', '**/*.js'],
-    //     injectChanges: true,
-    //     logFileChanges: false,
-    //     logLevel: 'silent',    
-    //     notify: true,
-    //     reloadDelay: 0,
-    //     server: {
-    //         baseDir: ['./'],
-    //         middleware: superstatic({ debug: false})
-    //     }
-    // });	
-    // for more browser-sync config options: http://www.browsersync.io/docs/options/
     browserSync({
-
         // informs browser-sync to proxy our expressjs app which would run at the following location
-        proxy: 'http://localhost:3000',
-
+        proxy: 'http://localhost:3100',
         // informs browser-sync to use the following port for the proxied app
         // notice that the default port is 3000, which would clash with our expressjs
         port: 4000,
-
         // open the proxied app in chrome
-        browser: ['google-chrome']
+        browser: ["google chrome"]
     });
 });
 
@@ -191,5 +178,3 @@ gulp.task('default', ['build_sass','build_html','serve'], function () {
     gulp.watch(config.clientHtml, ['build_html','bs_reload']);
 });
 
-
-// gulp.task('default', ['serve']);
