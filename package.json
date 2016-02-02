@@ -1,21 +1,18 @@
 {
-  "name": "ng2_play",
+  "name": "angular2_seed",
   "version": "1.0.0",
-  "description": "- Blog @ http://www.towfeek.se/2015/07/angularjs-2-overview/\r - Screencast @ https://youtu.be/rd3cLh_wn04",
+  "description": "angular 2 and expressjs workflow with gulp, browser-sync.",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ajtowf/ng2_play.git"
+    "url": "https://github.com/anismomin/ang2_exp_sync.git"
   },
-  "author": "Ajden Towfeek",
+  "author": "Anis Momin",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ajtowf/ng2_play/issues"
-  },
-  "homepage": "https://github.com/ajtowf/ng2_play#readme",
+  "homepage": "",
   "devDependencies": {
     "browser-sync": "^2.9.3",
     "del": "^2.2.0",
