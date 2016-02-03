@@ -138,7 +138,9 @@ gulp.task('build_html', function() {
 
 gulp.task('build_sass', function() {
     return gulp.src(config.clientScss)
-        .pipe(sass())
+        .pipe(sass({ outputStyle: 'compressed' })
+            .on('error', sass.logError)
+         )
         .pipe(gulp.dest(config.scss))
         .pipe(browserSync.reload({ stream: true }));
 });
