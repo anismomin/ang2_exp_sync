@@ -2,12 +2,12 @@ module.exports = function() {
 	var config = {
 		dev: './src/',
 		
-		clientConf: './src/client/tsconfig.json',
+		clientConf: './src/client/app/tsconfig.json',
 		client: './src/client/',
-		clientTs: './src/client/**/**/*.ts',
-		clientHtml: './src/client/**/*.html',
-		clientImages: './src/assets/images/**/*',
-		clientScss: './src/assets/scss/**/*.scss',
+		clientTs: './src/client/app/**/**/*.ts',
+		clientHtml: './src/client/app/**/*.html',
+		clientImages: './src/client/assets/images/**/*',
+		clientScss: './src/client/assets/scss/**/*.scss',
 
 
 		serverConf: './src/server/tsconfig.json',
@@ -15,10 +15,11 @@ module.exports = function() {
 		devServerTs: './src/server/**/*.ts',
 
 		built : './built/',
-		builtLibs: './built/client/libs/',
 		builtClient: './built/client/',
-		images: './built/assets/images/',
-		scss: './built/assets/css/',		
+		builtLibs: './built/client/libs/',
+		builtApp: './built/client/app/',
+		images: './built/client/assets/images/',
+		scss: './built/client/assets/css/',		
 
 		builtServer: './built/server/',
 

@@ -22,14 +22,8 @@ var imagemin = require('gulp-imagemin');
 var sass        = require('gulp-sass');
 
 
-gulp.task('clean_build', function(){
-    return del(config.built)
-});
-
-
-
 // SERVER
-gulp.task('cleanServer', function(){
+gulp.task('delete_server', function(){
     return del(config.builtServer)
 });
 
@@ -48,7 +42,7 @@ gulp.task('build_server', function () {
 // connected to browser-sync after restarting nodemon
 var BROWSER_SYNC_RELOAD_DELAY = 500;
 
-gulp.task('nodemon', ['cleanServer', 'build_server'], function (cb) {
+gulp.task('nodemon', ['delete_server', 'build_server'], function (cb) {
   var called = false;
   return nodemon({
 
@@ -116,7 +110,10 @@ gulp.task('build_index', function(){
 
 });
 
-gulp.task('compile_ts', function() {
+/*
+  Get App ts file and build application
+*/
+gulp.task('build_app', function() {
     
     var tsProject = tsc.createProject(config.clientConf);
 
@@ -131,12 +128,12 @@ gulp.task('compile_ts', function() {
 
     return tsResult.js
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(config.builtClient));
+        .pipe(gulp.dest(config.builtApp));
 });
 
 gulp.task('build_html', function() {
     gulp.src(config.clientHtml)
-        .pipe(gulp.dest(config.builtClient))
+        .pipe(gulp.dest(config.builtApp))
         .pipe(browserSync.stream());    
 });
 
@@ -155,10 +152,12 @@ gulp.task('build_img', function () {
         .pipe(gulp.dest(config.images));
 });
 
-
-gulp.task('serve', ['nodemon', 'ts_lint', 'build_index', 'compile_ts'], function() {
+/*
+  Serving app And express server
+*/
+gulp.task('serve', ['nodemon', 'ts_lint', 'build_index', 'build_app'], function() {
     	
-    gulp.watch([config.clientTs], ['ts_lint', 'compile_ts']);
+    gulp.watch([config.clientTs], ['ts_lint', 'build_app']);
 	
     browserSync({
         // informs browser-sync to proxy our expressjs app which would run at the following location
@@ -169,11 +168,28 @@ gulp.task('serve', ['nodemon', 'ts_lint', 'build_index', 'compile_ts'], function
         // open the proxied app in chrome
         browser: ["google chrome"]
     });
+
 });
 
+/*
+  Clean built after structure chnages
+*/
 
-gulp.task('default', ['build_sass','build_html','serve'], function () {
-    gulp.watch(config.clientTs,   ['compile_ts', browserSync.reload]);
+gulp.task('delete_build', function(){
+    return del(config.built)
+});
+
+gulp.task('clean_build', function(callback){
+    runSequence('delete_build', 'build_server', 'build_sass','build_html','serve', callback);
+});
+
+/*
+  Defsult Task
+*/
+
+//gulp.task('default', ['build_sass','build_html','serve'], function () {
+gulp.task('default', ['clean_build'], function () {
+    gulp.watch(config.clientTs,   ['build_app', browserSync.reload]);
     gulp.watch(config.clientScss,  ['build_sass']);
     gulp.watch(config.clientHtml, ['build_html','bs_reload']);
 });

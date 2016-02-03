@@ -4,24 +4,34 @@
     <title>Angular 2 Express Start</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
+  </head>
+  <body>
+
+    <my-app>Loading...</my-app>
+
+    <!-- Angular2 libs -->
     <script src="libs/es6-shim/es6-shim.min.js"></script>
     <script src="libs/angular2/bundles/angular2-polyfills.js"></script>
     <script src="libs/systemjs/dist/system.src.js"></script>
-    <script>  
-        System.config({defaultJSExtensions: true});
-    </script>
     <script src="libs/rxjs/bundles/Rx.js"></script>
     <script src="libs/angular2/bundles/angular2.dev.js"></script>   
     <script src="libs/angular2/bundles/router.dev.js"></script>
     <script src="libs/angular2/bundles/http.dev.js"></script>
 
+    
+     <!-- 2. Configure SystemJS -->
     <script>
-      System.import('boot')
-            .then(null, console.error.bind(console));
+        System.config({
+            packages: {
+                'app': {
+                    format: 'register',
+                    defaultExtension: 'js'
+                },
+            },
+        });
+        System.import('app/boot')
+                .then(null, console.error.bind(console));
     </script>
     
-  </head>
-  <body>
-    <my-app>Loading...</my-app>
   </body>
 </html>

@@ -11,7 +11,7 @@ import { About } from './about/about';
 	selector: 'my-app'
 })
 @View({
-	templateUrl: 'components/app.html',
+	templateUrl: 'app/components/app.html',
 	directives: [RouterOutlet, RouterLink]
 })
 @RouteConfig([
