@@ -13,7 +13,6 @@ var runSequence = require('run-sequence');
 /* Server */
 var nodemon = require('gulp-nodemon');
 var browserSync = require('browser-sync');
-var superstatic = require('superstatic');
 
 /* Images */
 var imagemin = require('gulp-imagemin');
